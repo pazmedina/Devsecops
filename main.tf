@@ -26,10 +26,9 @@ resource "null_resource" "rpicluster_bootstrap" {
 
       # there is a better way to do this but this will suffice for now
       # populate etc hosts so that hosts can resolve each other
-      "if ! grep -q 'pinode1' /etc/hosts; then echo '192.168.1.91 pinode1' | sudo tee -a /etc/hosts; fi",
-      "if ! grep -q 'pinode2' /etc/hosts; then echo '192.168.1.92 pinode2' | sudo tee -a /etc/hosts; fi",
-      "if ! grep -q 'pinode3' /etc/hosts; then echo '192.168.1.93 pinode3' | sudo tee -a /etc/hosts; fi",
-
+      "if ! grep -q 'kubermaster' /etc/hosts; then echo '192.168.1.91 pinode1' | sudo tee -a /etc/hosts; fi",
+      "if ! grep -q 'kubernodo1' /etc/hosts; then echo '192.168.1.92 pinode2' | sudo tee -a /etc/hosts; fi",
+   
       # date time config (you use UTC...right?!?)
       "sudo timedatectl set-timezone UTC",
       "sudo timedatectl set-ntp true",
