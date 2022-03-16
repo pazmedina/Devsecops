@@ -1,10 +1,10 @@
 # Configuramos nuestro cluster como provedor
-provider "rke" {
-  log_file = "rke_debug.log"
+provider "rpi" {
+  log_file = "rpi_debug.log"
 }
 
 # Creamos el cluster
-resource rke_cluster "clusterrke" {
+resource rke_cluster "rpicluster" {
   depends_on = [null_resource.next]
   ignore_docker_version = true
   #disable_port_check = true
