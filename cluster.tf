@@ -1,6 +1,6 @@
 # Configuramos nuestro cluster como provedor
-provider "rpi" {
-  log_file = "rpi_debug.log"
+provider "rke" {
+  log_file = "rke_debug.log"
 }
 
 # Creamos el cluster
