@@ -1,9 +1,9 @@
 locals {
   # username that terraform will use to ssh to the node(s)
-  user = "terraform"
+  user = "pazmedina"
 
   # the filename of the private key used to ssh to the node(s)
-  private_key = "terraformuser"
+  private_key = "pazmedina"
 
   
   nodes = {
@@ -13,7 +13,7 @@ locals {
       role     = ["controlplane", "worker", "etcd"]
     },
     node2 = {
-      hostname = "pinode1"
+      hostname = "Kubernodo1"
       ip_addr  = "192.168.1.92"
       role     = ["worker", "etcd"]
     }
