@@ -6,17 +6,17 @@ resource "null_resource" "kubecluster_bootstrap" {
   connection {
     type        = "ssh"
     user        = local.user
-    private_key = file("${path.module}/../${local.private_key}")
+    private_key = file("${path.module}/../../.ssh/${local.private_key}")
     host        = each.value.ip_addr
   }
 
- 
+
   provisioner "file" {
     source      = "files/daemon.json"
     destination = "./daemon.json"
   }
 
- 
+
   provisioner "remote-exec" {
     inline = [
       # set hostname
@@ -27,7 +27,7 @@ resource "null_resource" "kubecluster_bootstrap" {
       # populate etc hosts so that hosts can resolve each other
       "if ! grep -q 'kubemaster' /etc/hosts; then echo '192.168.1.142 kubemaster' | sudo tee -a /etc/hosts; fi",
       "if ! grep -q 'kubenode1' /etc/hosts; then echo '192.168.1.139 kubenode1' | sudo tee -a /etc/hosts; fi",
-   
+
       # date time config (you use UTC...right?!?)
       "sudo timedatectl set-timezone UTC",
       "sudo timedatectl set-ntp true",
