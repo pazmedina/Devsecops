@@ -9,12 +9,12 @@ locals {
   nodes = {
     node1 = {
       hostname = "Kubermaster"
-      ip_addr  = "192.168.1.91"
+      ip_addr  = "192.168.1.192"
       role     = ["controlplane", "worker", "etcd"]
     },
     node2 = {
-      hostname = "Kubernodo1"
-      ip_addr  = "192.168.1.92"
+      hostname = "Kubernode1"
+      ip_addr  = "192.168.1.139"
       role     = ["worker", "etcd"]
     }
   }
