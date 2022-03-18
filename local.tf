@@ -6,7 +6,7 @@ locals {
   # the filename of the private key used to ssh to the node(s)
   private_key = "id_rsa"
 
-  
+
   nodes = {
     node1 = {
       hostname = "Kubermaster"

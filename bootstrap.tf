@@ -6,7 +6,7 @@ resource "null_resource" "kubecluster_bootstrap" {
   connection {
     type        = "ssh"
     user        = local.user
-    private_key = file("${path.module}/../../.ssh/${local.private_key}")
+    private_key = file("${path.module}/../../../.ssh/${local.private_key}")
     host        = each.value.ip_addr
   }
 

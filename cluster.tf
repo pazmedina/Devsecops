@@ -4,8 +4,8 @@ provider "rke" {
 }
 
 # Creamos el cluster
-resource rke_cluster "kubecluster" {
-  depends_on = [null_resource.next]
+resource "rke_cluster" "kubecluster" {
+  depends_on            = [null_resource.next]
   ignore_docker_version = true
   #disable_port_check = true
   dynamic "nodes" {
@@ -27,14 +27,14 @@ resource rke_cluster "kubecluster" {
 
   ## default to arm64 versions that seem to work
   #system_images {
-   # alpine                      = "rancher/rke-tools:v0.1.71"
-   # nginx_proxy                 = "rancher/rke-tools:v0.1.71"
-   # cert_downloader             = "rancher/rke-tools:v0.1.71"
-   # kubernetes_services_sidecar = "rancher/rke-tools:v0.1.71"
-   # nodelocal                   = "rancher/rke-tools:v0.1.71"
-   # ingress                     = "rancher/nginx-ingress-controller:nginx-0.35.0-rancher2"
-   # etcd                        = "rancher/coreos-etcd:v3.4.13-arm64"
- # }
+  # alpine                      = "rancher/rke-tools:v0.1.71"
+  # nginx_proxy                 = "rancher/rke-tools:v0.1.71"
+  # cert_downloader             = "rancher/rke-tools:v0.1.71"
+  # kubernetes_services_sidecar = "rancher/rke-tools:v0.1.71"
+  # nodelocal                   = "rancher/rke-tools:v0.1.71"
+  # ingress                     = "rancher/nginx-ingress-controller:nginx-0.35.0-rancher2"
+  # etcd                        = "rancher/coreos-etcd:v3.4.13-arm64"
+  # }
 
   upgrade_strategy {
     drain                  = true
