@@ -1,9 +1,10 @@
+
 locals {
   # username that terraform will use to ssh to the node(s)
   user = "pazmedina"
 
   # the filename of the private key used to ssh to the node(s)
-  private_key = "pazmedina"
+  private_key = "id_rsa"
 
   
   nodes = {
