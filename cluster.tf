@@ -34,7 +34,7 @@ resource rke_cluster "kubecluster" {
    # nodelocal                   = "rancher/rke-tools:v0.1.71"
    # ingress                     = "rancher/nginx-ingress-controller:nginx-0.35.0-rancher2"
    # etcd                        = "rancher/coreos-etcd:v3.4.13-arm64"
-  }
+ # }
 
   upgrade_strategy {
     drain                  = true
