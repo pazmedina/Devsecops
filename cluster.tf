@@ -4,7 +4,7 @@ provider "rke" {
 }
 
 # Creamos el cluster
-resource rke_cluster "rpicluster" {
+resource rke_cluster "kubecluster" {
   depends_on = [null_resource.next]
   ignore_docker_version = true
   #disable_port_check = true
