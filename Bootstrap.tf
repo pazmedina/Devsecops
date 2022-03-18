@@ -1,5 +1,4 @@
-resource "null_resource" "rpicluster_bootstrap" {
-  # increment version here if you wish this to run again after running it the first time
+resource "null_resource" "kubecluster_bootstrap" {
   triggers = {
     version = "0.1.2"
   }
@@ -26,8 +25,8 @@ resource "null_resource" "rpicluster_bootstrap" {
 
       # there is a better way to do this but this will suffice for now
       # populate etc hosts so that hosts can resolve each other
-      "if ! grep -q 'kubermaster' /etc/hosts; then echo '192.168.1.91 kubermaster' | sudo tee -a /etc/hosts; fi",
-      "if ! grep -q 'kubernodo1' /etc/hosts; then echo '192.168.1.92 kubernodo1' | sudo tee -a /etc/hosts; fi",
+      "if ! grep -q 'kubemaster' /etc/hosts; then echo '192.168.1.142 kubemaster' | sudo tee -a /etc/hosts; fi",
+      "if ! grep -q 'kubenode1' /etc/hosts; then echo '192.168.1.139 kubenode1' | sudo tee -a /etc/hosts; fi",
    
       # date time config (you use UTC...right?!?)
       "sudo timedatectl set-timezone UTC",
@@ -80,7 +79,7 @@ resource "null_resource" "rpicluster_bootstrap" {
 
 # wait 90 seconds after the node(s) have rebooted before doing anything else
 resource "time_sleep" "wait_90_seconds" {
-  depends_on      = [null_resource.rpicluster_bootstrap]
+  depends_on      = [null_resource.kubecluster_bootstrap]
   create_duration = "90s"
 }
 
