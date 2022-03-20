@@ -16,7 +16,7 @@ resource "rke_cluster" "kubecluster" {
       address = nodes.value.hostname
       user    = local.user
       role    = nodes.value.role
-      ssh_key = file("${path.module}/../../../.ssh/${local.private_key}")
+      ssh_key = file("~/.ssh/${local.private_key}")
     }
   }
 

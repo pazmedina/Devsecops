@@ -1,12 +1,12 @@
 resource "null_resource" "kubecluster_bootstrap" {
-  triggers = {
-    version = "0.1.2"
-  }
+  #  triggers = {
+  #    version = "0.1.2"
+  #  }
   for_each = local.nodes
   connection {
     type        = "ssh"
     user        = local.user
-    private_key = file("${path.module}/../../../.ssh/${local.private_key}")
+    private_key = file("~/.ssh/${local.private_key}")
     host        = each.value.ip_addr
   }
 
@@ -19,38 +19,38 @@ resource "null_resource" "kubecluster_bootstrap" {
 
   provisioner "remote-exec" {
     inline = [
+      "echo ${var.pw_root} | sudo -S apt-get update",
+      "sudo apt-get install -y curl",
       # set hostname
       "sudo hostnamectl set-hostname ${each.value.hostname}",
-      "if ! grep -qP ${each.value.hostname} /etc/hosts; then echo '127.0.1.1 ${each.value.hostname}' | sudo tee -a /etc/hosts; fi",
+      #"if ! grep -qP ${each.value.hostname} /etc/hosts; then echo '127.0.1.1 ${each.value.hostname}' | sudo tee -a /etc/hosts"; fi",
 
       # there is a better way to do this but this will suffice for now
       # populate etc hosts so that hosts can resolve each other
-      "if ! grep -q 'kubemaster' /etc/hosts; then echo '192.168.1.142 kubemaster' | sudo tee -a /etc/hosts; fi",
-      "if ! grep -q 'kubenode1' /etc/hosts; then echo '192.168.1.139 kubenode1' | sudo tee -a /etc/hosts; fi",
 
-      # date time config (you use UTC...right?!?)
+      # date time config (MODIFICAR)
       "sudo timedatectl set-timezone UTC",
       "sudo timedatectl set-ntp true",
 
       # system & package updates - then lock kernel updates
       "sudo apt-get update -y",
       "sudo apt-get -o Dpkg::Options::='--force-confnew' upgrade -y",
-      "sleep 5",
+      #"sleep 5",
       "sudo apt-get -o Dpkg::Options::='--force-confnew' dist-upgrade -y",
-      "sleep 5",
+      #"sleep 5",
       "sudo apt --fix-broken install -y",
       "sudo apt-mark hold linux-raspi",
       "sudo apt-get -y --purge autoremove",
 
       # install docker for arm64 (only have focal version right now)
-      # for now rancher rke requires a version of docker just little further behind
+      # for now rancher rke requires a version of docker just little further behind PRUEBA1
       "sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common ",
       "echo 'deb [arch=arm64] https://download.docker.com/linux/ubuntu focal stable' | sudo tee /etc/apt/sources.list.d/docker.list",
       "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add",
       "sudo apt-get update -y",
       "sudo apt-get install -y docker-ce docker-ce-cli containerd.io",
       # rke may want a specific Docker version, or in the cluster.tf you can disable the Docker version check
-      #"sudo apt-get install -y docker-ce=5:19.03.14~3-0~ubuntu-focal docker-ce-cli=5:19.03.14~3-0~ubuntu-focal containerd.io",
+      "sudo apt-get install -y docker-ce=5:19.03.14~3-0~ubuntu-focal docker-ce-cli=5:19.03.14~3-0~ubuntu-focal containerd.io",
 
       # replace the contents of /etc/docker/daemon.json to enable the systemd cgroup driver
       "sudo rm -f /etc/docker/daemon.json",
